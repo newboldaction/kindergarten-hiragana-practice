@@ -160,7 +160,17 @@ function renderHistory(onSelect) {
   history.forEach(entry => {
     const li = document.createElement('li');
     li.className = 'history-item';
-    li.innerHTML = `<span class="history-words">${entry.words.join('、')}</span><span class="history-date">${entry.date}</span>`;
+
+    const wordsSpan = document.createElement('span');
+    wordsSpan.className = 'history-words';
+    wordsSpan.textContent = entry.words.join('、');
+
+    const dateSpan = document.createElement('span');
+    dateSpan.className = 'history-date';
+    dateSpan.textContent = entry.date;
+
+    li.appendChild(wordsSpan);
+    li.appendChild(dateSpan);
     li.addEventListener('click', () => onSelect(entry.words));
     list.appendChild(li);
   });

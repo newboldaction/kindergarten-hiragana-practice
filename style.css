@@ -283,6 +283,14 @@ body {
   margin-left: 0.5rem;
 }
 
+/* ===== フッター ===== */
+.site-footer {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  color: #AAA;
+  font-size: 0.85rem;
+}
+
 /* ===== 印刷スタイル ===== */
 @media print {
   body {
