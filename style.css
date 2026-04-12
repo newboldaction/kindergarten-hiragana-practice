@@ -1,0 +1,342 @@
+/* ===== 基本設定 ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  background: #FFF8E7;
+  min-height: 100vh;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ===== 入力画面 ===== */
+#input-screen {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+#input-screen header {
+  margin-bottom: 2rem;
+}
+
+#input-screen h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #FF6B6B;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #888;
+}
+
+#word-input {
+  width: 100%;
+  padding: 1rem;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.3rem;
+  border: 3px solid #FFD1D1;
+  border-radius: 12px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#word-input:focus {
+  border-color: #FF6B6B;
+}
+
+#word-input::placeholder {
+  color: #CCC;
+  font-size: 1rem;
+}
+
+#error-message {
+  color: #E53935;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: #FFF0F0;
+  border-radius: 8px;
+}
+
+#generate-btn {
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  background: #4CAF50;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+#generate-btn:hover {
+  background: #43A047;
+}
+
+#generate-btn:active {
+  transform: scale(0.97);
+}
+
+/* ===== 練習シート画面 ===== */
+#practice-sheet {
+  background: #fff;
+  min-height: 100vh;
+}
+
+.sheet-controls {
+  display: flex;
+  gap: 0.8rem;
+  padding: 1rem 1.5rem;
+  background: #F5F5F5;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.sheet-controls button {
+  padding: 0.6rem 1.5rem;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#back-btn {
+  background: #E0E0E0;
+  color: #555;
+}
+
+#back-btn:hover {
+  background: #D0D0D0;
+}
+
+#print-btn {
+  background: #2196F3;
+  color: #fff;
+}
+
+#print-btn:hover {
+  background: #1E88E5;
+}
+
+/* ===== 単語セクション ===== */
+#sheet-content {
+  padding: 1.5cm;
+}
+
+.word-section {
+  margin-bottom: 1.5cm;
+}
+
+.word-header {
+  font-size: 1.6cm;
+  font-weight: 700;
+  color: #333;
+  padding-bottom: 0.3cm;
+  margin-bottom: 0.5cm;
+  border-bottom: 3px solid #FFD1D1;
+}
+
+/* ===== 練習行 ===== */
+.practice-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.3cm;
+}
+
+.row-label {
+  width: 1.5cm;
+  font-size: 1cm;
+  font-weight: 700;
+  color: #FF6B6B;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.practice-squares {
+  display: flex;
+  gap: 0.15cm;
+}
+
+/* ===== マス目 ===== */
+.square {
+  width: 4cm;
+  height: 4cm;
+  border: 2px solid #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3cm;
+  font-weight: 500;
+  position: relative;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* 十字ガイド線 */
+.square::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed #DDD;
+  pointer-events: none;
+}
+
+.square::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  border-left: 1px dashed #DDD;
+  pointer-events: none;
+}
+
+/* お手本（黒） */
+.square.model {
+  color: #333;
+  font-weight: 700;
+  background: #FAFAFA;
+}
+
+/* なぞり書き（薄灰） */
+.square.tracing {
+  color: #E0E0E0;
+}
+
+/* 空マス */
+.square.empty {
+  /* 文字なし、ガイド線のみ */
+}
+
+/* 拗音（2文字セット）用 */
+.square.combo {
+  font-size: 2.4cm;
+}
+
+/* ===== 履歴セクション ===== */
+#history-section {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.history-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #888;
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+#history-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 1rem;
+  background: #FFF0F0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.history-item:hover {
+  background: #FFE0E0;
+}
+
+.history-words {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.history-date {
+  font-size: 0.8rem;
+  color: #AAA;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+/* ===== 印刷スタイル ===== */
+@media print {
+  body {
+    background: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  #input-screen {
+    display: none !important;
+  }
+
+  #practice-sheet {
+    display: block !important;
+    background: #fff;
+  }
+
+  #sheet-content {
+    padding: 1cm;
+  }
+
+  .word-section {
+    page-break-inside: avoid;
+  }
+
+  .practice-row {
+    page-break-inside: avoid;
+  }
+
+  .row-label {
+    color: #FF6B6B;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .word-header {
+    border-bottom-color: #FFD1D1;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .square.model {
+    background: #FAFAFA;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .square.tracing {
+    color: #E0E0E0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

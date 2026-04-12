@@ -1,0 +1,219 @@
+// 拗音の小文字（前の文字と結合して1セットにする）
+const SMALL_KANA_COMBO = new Set(['ゃ', 'ゅ', 'ょ', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ']);
+
+/**
+ * テキスト入力を単語の配列に分割
+ */
+function parseInput(text) {
+  return text
+    .split(/[\n,、]+/)
+    .map(w => w.trim())
+    .filter(w => w.length > 0);
+}
+
+/**
+ * ひらがな文字かどうか判定（長音符ーも許可）
+ */
+function isHiragana(str) {
+  return /^[\u3040-\u309F\u30FC]+$/.test(str);
+}
+
+/**
+ * 単語を練習単位の文字配列に分解（拗音は1セット）
+ */
+function extractCharacters(word) {
+  const normalized = word.normalize('NFC');
+  const chars = [];
+  let i = 0;
+  while (i < normalized.length) {
+    if (i + 1 < normalized.length && SMALL_KANA_COMBO.has(normalized[i + 1])) {
+      chars.push(normalized[i] + normalized[i + 1]);
+      i += 2;
+    } else {
+      chars.push(normalized[i]);
+      i += 1;
+    }
+  }
+  return chars;
+}
+
+/**
+ * マス目を1つ生成
+ */
+function createSquare(char, type) {
+  const sq = document.createElement('div');
+  sq.className = `square ${type}`;
+  if (char) {
+    sq.textContent = char;
+    if (char.length > 1) {
+      sq.classList.add('combo');
+    }
+  }
+  return sq;
+}
+
+/**
+ * 1文字分の練習行を生成
+ * お手本(1) + なぞり(2) + 空マス(3) = 6マス
+ */
+function createPracticeRow(char) {
+  const row = document.createElement('div');
+  row.className = 'practice-row';
+
+  const label = document.createElement('div');
+  label.className = 'row-label';
+  label.textContent = char;
+  if (char.length > 1) label.style.fontSize = '0.8cm';
+  row.appendChild(label);
+
+  const squares = document.createElement('div');
+  squares.className = 'practice-squares';
+
+  // お手本 x1
+  squares.appendChild(createSquare(char, 'model'));
+  // なぞり書き x2
+  squares.appendChild(createSquare(char, 'tracing'));
+  squares.appendChild(createSquare(char, 'tracing'));
+  // 空マス x3
+  squares.appendChild(createSquare('', 'empty'));
+  squares.appendChild(createSquare('', 'empty'));
+  squares.appendChild(createSquare('', 'empty'));
+
+  row.appendChild(squares);
+  return row;
+}
+
+/**
+ * 練習シート全体を生成
+ */
+function generateSheet(words) {
+  const content = document.getElementById('sheet-content');
+  content.innerHTML = '';
+
+  words.forEach(word => {
+    const section = document.createElement('section');
+    section.className = 'word-section';
+
+    const header = document.createElement('div');
+    header.className = 'word-header';
+    header.textContent = word;
+    section.appendChild(header);
+
+    const characters = extractCharacters(word);
+    characters.forEach(char => {
+      section.appendChild(createPracticeRow(char));
+    });
+
+    content.appendChild(section);
+  });
+}
+
+/**
+ * エラーメッセージの表示/非表示
+ */
+function showError(msg) {
+  const el = document.getElementById('error-message');
+  el.textContent = msg;
+  el.classList.remove('hidden');
+}
+
+function hideError() {
+  document.getElementById('error-message').classList.add('hidden');
+}
+
+// ===== 履歴機能（localStorage、直近5件） =====
+const HISTORY_KEY = 'hiragana_practice_history';
+const HISTORY_MAX = 5;
+
+function loadHistory() {
+  try {
+    return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function saveToHistory(words) {
+  const history = loadHistory();
+  const entry = {
+    words: words,
+    date: new Date().toLocaleDateString('ja-JP', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+  };
+  history.unshift(entry);
+  if (history.length > HISTORY_MAX) history.length = HISTORY_MAX;
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+}
+
+function renderHistory(onSelect) {
+  const history = loadHistory();
+  const section = document.getElementById('history-section');
+  const list = document.getElementById('history-list');
+
+  if (history.length === 0) {
+    section.classList.add('hidden');
+    return;
+  }
+
+  section.classList.remove('hidden');
+  list.innerHTML = '';
+
+  history.forEach(entry => {
+    const li = document.createElement('li');
+    li.className = 'history-item';
+    li.innerHTML = `<span class="history-words">${entry.words.join('、')}</span><span class="history-date">${entry.date}</span>`;
+    li.addEventListener('click', () => onSelect(entry.words));
+    list.appendChild(li);
+  });
+}
+
+// ===== イベントリスナー =====
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('word-input');
+  const generateBtn = document.getElementById('generate-btn');
+  const printBtn = document.getElementById('print-btn');
+  const backBtn = document.getElementById('back-btn');
+  const inputScreen = document.getElementById('input-screen');
+  const practiceSheet = document.getElementById('practice-sheet');
+
+  generateBtn.addEventListener('click', () => {
+    hideError();
+    const words = parseInput(input.value);
+
+    if (words.length === 0) {
+      showError('ことばを いれてね');
+      return;
+    }
+
+    const invalidWords = words.filter(w => !isHiragana(w));
+    if (invalidWords.length > 0) {
+      showError(`ひらがなで にゅうりょく してね: 「${invalidWords.join('」「')}」`);
+      return;
+    }
+
+    saveToHistory(words);
+    generateSheet(words);
+    inputScreen.classList.add('hidden');
+    practiceSheet.classList.remove('hidden');
+  });
+
+  printBtn.addEventListener('click', () => {
+    window.print();
+  });
+
+  backBtn.addEventListener('click', () => {
+    practiceSheet.classList.add('hidden');
+    inputScreen.classList.remove('hidden');
+    renderHistory(selectFromHistory);
+  });
+
+  // 履歴クリック時：入力欄にセットして即生成
+  function selectFromHistory(words) {
+    input.value = words.join('、');
+    generateSheet(words);
+    inputScreen.classList.add('hidden');
+    practiceSheet.classList.remove('hidden');
+  }
+
+  // 初期表示時に履歴を描画
+  renderHistory(selectFromHistory);
+});
