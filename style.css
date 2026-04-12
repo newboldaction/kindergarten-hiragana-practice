@@ -318,6 +318,41 @@ body {
   margin-left: 0.5rem;
 }
 
+/* ===== 使い方セクション ===== */
+.usage-section {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 1.5rem 1rem;
+}
+
+.usage-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #888;
+  text-align: center;
+  margin-bottom: 0.8rem;
+}
+
+.usage-list {
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.usage-note {
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  background: #F0F8FF;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #5588AA;
+  line-height: 1.6;
+}
+
 /* ===== フッター ===== */
 .site-footer {
   text-align: center;
