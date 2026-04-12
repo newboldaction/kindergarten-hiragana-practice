@@ -40,6 +40,41 @@ body {
   color: #888;
 }
 
+/* ===== 名前フィールド ===== */
+.name-field {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.name-field label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #FF6B6B;
+  flex-shrink: 0;
+}
+
+#user-name {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 1.2rem;
+  border: 3px solid #FFD1D1;
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#user-name:focus {
+  border-color: #FF6B6B;
+}
+
+#user-name::placeholder {
+  color: #CCC;
+  font-size: 1rem;
+}
+
 #word-input {
   width: 100%;
   padding: 1rem;
@@ -291,6 +326,18 @@ body {
   font-size: 0.85rem;
 }
 
+/* ===== 印刷日付（画面では非表示） ===== */
+.print-only {
+  display: none;
+}
+
+#print-date {
+  text-align: right;
+  font-size: 0.9rem;
+  color: #888;
+  padding: 0.5cm 1.5cm 0;
+}
+
 /* ===== 印刷スタイル ===== */
 @media print {
   body {
@@ -301,6 +348,10 @@ body {
 
   .no-print {
     display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
   }
 
   #input-screen {

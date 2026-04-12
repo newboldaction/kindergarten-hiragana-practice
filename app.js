@@ -121,19 +121,31 @@ function hideError() {
   document.getElementById('error-message').classList.add('hidden');
 }
 
-// ===== 履歴機能（localStorage、直近5件） =====
-const HISTORY_KEY = 'hiragana_practice_history';
+// ===== 履歴機能（localStorage、個人別・直近5件） =====
+const HISTORY_PREFIX = 'hiragana_history_';
 const HISTORY_MAX = 5;
+const LAST_USER_KEY = 'hiragana_last_user';
+
+function getHistoryKey(userName) {
+  return HISTORY_PREFIX + (userName || '_default');
+}
+
+function getCurrentUser() {
+  return document.getElementById('user-name').value.trim();
+}
 
 function loadHistory() {
+  const key = getHistoryKey(getCurrentUser());
   try {
-    return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+    return JSON.parse(localStorage.getItem(key)) || [];
   } catch {
     return [];
   }
 }
 
 function saveToHistory(words) {
+  const userName = getCurrentUser();
+  const key = getHistoryKey(userName);
   const history = loadHistory();
   const entry = {
     words: words,
@@ -141,7 +153,17 @@ function saveToHistory(words) {
   };
   history.unshift(entry);
   if (history.length > HISTORY_MAX) history.length = HISTORY_MAX;
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  localStorage.setItem(key, JSON.stringify(history));
+  if (userName) localStorage.setItem(LAST_USER_KEY, userName);
+}
+
+/**
+ * 印刷日付を設定（西暦）
+ */
+function updatePrintDate() {
+  const el = document.getElementById('print-date');
+  const now = new Date();
+  el.textContent = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')}`;
 }
 
 function renderHistory(onSelect) {
@@ -179,11 +201,16 @@ function renderHistory(onSelect) {
 // ===== イベントリスナー =====
 document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('word-input');
+  const userName = document.getElementById('user-name');
   const generateBtn = document.getElementById('generate-btn');
   const printBtn = document.getElementById('print-btn');
   const backBtn = document.getElementById('back-btn');
   const inputScreen = document.getElementById('input-screen');
   const practiceSheet = document.getElementById('practice-sheet');
+
+  // 前回の名前を復元
+  const lastUser = localStorage.getItem(LAST_USER_KEY);
+  if (lastUser) userName.value = lastUser;
 
   generateBtn.addEventListener('click', () => {
     hideError();
@@ -201,12 +228,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     saveToHistory(words);
+    updatePrintDate();
     generateSheet(words);
     inputScreen.classList.add('hidden');
     practiceSheet.classList.remove('hidden');
   });
 
   printBtn.addEventListener('click', () => {
+    updatePrintDate();
     window.print();
   });
 
@@ -216,9 +245,15 @@ document.addEventListener('DOMContentLoaded', () => {
     renderHistory(selectFromHistory);
   });
 
+  // 名前が変わったら履歴を切り替え
+  userName.addEventListener('input', () => {
+    renderHistory(selectFromHistory);
+  });
+
   // 履歴クリック時：入力欄にセットして即生成
   function selectFromHistory(words) {
     input.value = words.join('、');
+    updatePrintDate();
     generateSheet(words);
     inputScreen.classList.add('hidden');
     practiceSheet.classList.remove('hidden');

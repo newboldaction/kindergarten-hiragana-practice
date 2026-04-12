@@ -19,6 +19,10 @@
       <p class="subtitle">れんしゅうしたい ことばを いれてね</p>
     </header>
     <main>
+      <div class="name-field">
+        <label for="user-name">おなまえ</label>
+        <input type="text" id="user-name" placeholder="れい: たろう" autocomplete="off">
+      </div>
       <textarea id="word-input" rows="4" placeholder="れい: さくら、おかあさん&#10;（ことばごとに かいぎょう か 、で わけてね）"></textarea>
       <div id="error-message" class="hidden"></div>
       <button id="generate-btn">れんしゅうシートを つくる！</button>
@@ -37,6 +41,7 @@
       <button id="back-btn">もどる</button>
       <button id="print-btn">いんさつする</button>
     </div>
+    <div id="print-date" class="print-only"></div>
     <div id="sheet-content"></div>
   </div>
 
