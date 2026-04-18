@@ -361,6 +361,118 @@ body {
   font-size: 0.85rem;
 }
 
+/* ===== モバイル最適化（スマホ画面向け） ===== */
+@media screen and (max-width: 640px) {
+  /* 入力画面 */
+  #input-screen {
+    padding: 1.5rem 1rem;
+  }
+
+  #input-screen h1 {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .name-field {
+    gap: 0.5rem;
+  }
+
+  .name-field label {
+    font-size: 1rem;
+  }
+
+  #user-name {
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+  }
+
+  #word-input {
+    font-size: 1.1rem;
+    padding: 0.8rem;
+  }
+
+  #generate-btn {
+    font-size: 1.15rem;
+    padding: 0.9rem;
+  }
+
+  /* 練習シート画面 */
+  .sheet-controls {
+    padding: 0.8rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .sheet-controls button {
+    flex: 1;
+    padding: 0.7rem 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  #sheet-content {
+    padding: 3vw 2vw;
+  }
+
+  .word-section {
+    margin-bottom: 6vw;
+  }
+
+  .word-header {
+    font-size: 7vw;
+    padding-bottom: 1.5vw;
+    margin-bottom: 2vw;
+  }
+
+  .practice-row {
+    margin-bottom: 1.2vw;
+  }
+
+  .row-label {
+    width: 8vw;
+    font-size: 5vw;
+  }
+
+  .practice-squares {
+    gap: 0.8vw;
+  }
+
+  /* マス目を画面幅に合わせて縮小（6マス + ラベル + 余白 が画面に収まる） */
+  .square {
+    width: 13.5vw;
+    height: 13.5vw;
+    font-size: 10vw;
+    border-width: 1.5px;
+  }
+
+  .square.combo {
+    font-size: 8vw;
+  }
+
+  /* 使い方・履歴のスマホ最適化 */
+  .usage-section {
+    padding: 0 1rem 1rem;
+  }
+
+  .usage-list {
+    font-size: 0.9rem;
+    padding-left: 1.3rem;
+  }
+
+  .usage-note {
+    font-size: 0.85rem;
+  }
+
+  .history-words {
+    font-size: 1rem;
+  }
+
+  .history-date {
+    font-size: 0.75rem;
+  }
+}
+
 /* ===== 印刷日付（画面では非表示） ===== */
 .print-only {
   display: none;
