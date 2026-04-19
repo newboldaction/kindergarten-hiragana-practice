@@ -54,7 +54,7 @@ function createSquare(char, type) {
 
 /**
  * 1文字分の練習行を生成
- * お手本(1) + なぞり(2) + 空マス(3) = 6マス
+ * お手本(1) + なぞり(4) + 空マス(1) = 6マス
  */
 function createPracticeRow(char) {
   const row = document.createElement('div');
@@ -71,12 +71,12 @@ function createPracticeRow(char) {
 
   // お手本 x1
   squares.appendChild(createSquare(char, 'model'));
-  // なぞり書き x2
+  // なぞり書き x4
   squares.appendChild(createSquare(char, 'tracing'));
   squares.appendChild(createSquare(char, 'tracing'));
-  // 空マス x3
-  squares.appendChild(createSquare('', 'empty'));
-  squares.appendChild(createSquare('', 'empty'));
+  squares.appendChild(createSquare(char, 'tracing'));
+  squares.appendChild(createSquare(char, 'tracing'));
+  // 空マス x1
   squares.appendChild(createSquare('', 'empty'));
 
   row.appendChild(squares);
