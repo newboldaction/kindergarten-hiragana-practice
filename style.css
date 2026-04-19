@@ -1,3 +1,12 @@
+/* ===== 書き順フォント（お手本マス用） ===== */
+@font-face {
+  font-family: 'KanjiStrokeOrders';
+  src: url('fonts/KanjiStrokeOrders.woff2') format('woff2'),
+       url('fonts/KanjiStrokeOrders.woff') format('woff');
+  font-display: swap;
+  unicode-range: U+3040-309F, U+30FC;
+}
+
 /* ===== 基本設定 ===== */
 * {
   margin: 0;
@@ -254,11 +263,12 @@ body {
   pointer-events: none;
 }
 
-/* お手本（黒） */
+/* お手本（黒） — 書き順数字つきフォント */
 .square.model {
   color: #333;
-  font-weight: 700;
+  font-weight: 400;
   background: #FAFAFA;
+  font-family: 'KanjiStrokeOrders', 'Zen Maru Gothic', sans-serif;
 }
 
 /* なぞり書き（薄灰） */
