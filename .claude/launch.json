@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "hiragana-practice",
-      "runtimeExecutable": "sh",
-      "runtimeArgs": ["-c", "python3 -m http.server $PORT"],
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [".claude/serve.py"],
       "autoPort": true
     }
   ]

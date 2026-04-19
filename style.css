@@ -263,12 +263,42 @@ body {
   pointer-events: none;
 }
 
-/* お手本（黒） — 書き順数字つきフォント */
+/* お手本（黒） — 書き順数字つきフォント（SVGが無い文字のフォールバック） */
 .square.model {
   color: #333;
   font-weight: 400;
   background: #FAFAFA;
   font-family: 'KanjiStrokeOrders', 'Zen Maru Gothic', sans-serif;
+}
+
+/* お手本マス — KanjiVG SVGで表示する場合 */
+.square.model.has-svg {
+  padding: 4%;
+}
+
+.square.model.has-svg svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+/* ストロークは黒 */
+.square.model.has-svg .strokes {
+  fill: none;
+  stroke: #333;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 書き順数字は赤くて大きめに */
+.square.model.has-svg .numbers {
+  font-size: 14px;
+  font-weight: bold;
+  fill: #E53935;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 /* なぞり書き（薄灰） */
@@ -376,6 +406,21 @@ body {
   padding: 1.5rem 1rem;
   color: #AAA;
   font-size: 0.85rem;
+}
+
+.site-footer .credits {
+  margin-top: 0.3rem;
+  font-size: 0.75rem;
+  color: #BBB;
+}
+
+.site-footer .credits a {
+  color: #888;
+  text-decoration: none;
+}
+
+.site-footer .credits a:hover {
+  text-decoration: underline;
 }
 
 /* ===== モバイル最適化（スマホ画面向け） ===== */

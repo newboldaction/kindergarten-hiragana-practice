@@ -44,9 +44,15 @@ function createSquare(char, type) {
   const sq = document.createElement('div');
   sq.className = `square ${type}`;
   if (char) {
-    sq.textContent = char;
-    if (char.length > 1) {
-      sq.classList.add('combo');
+    // お手本マスで、KanjiVGデータがあればSVGで表示（書き順数字を独立スタイル化）
+    if (type === 'model' && char.length === 1 && typeof HIRAGANA_SVG !== 'undefined' && HIRAGANA_SVG[char]) {
+      sq.innerHTML = HIRAGANA_SVG[char];
+      sq.classList.add('has-svg');
+    } else {
+      sq.textContent = char;
+      if (char.length > 1) {
+        sq.classList.add('combo');
+      }
     }
   }
   return sq;
