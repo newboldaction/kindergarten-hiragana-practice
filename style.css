@@ -283,23 +283,45 @@ body {
   overflow: visible;
 }
 
-/* ストロークは黒 */
+/* ストロークのデフォルト設定（色は nth-of-type で上書き） */
 .square.model.has-svg .strokes {
   fill: none;
-  stroke: #333;
+  stroke: #888;
   stroke-width: 3;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-/* 書き順数字は赤くて大きめに */
+/* 書き順数字（色は nth-of-type で上書き） */
 .square.model.has-svg .numbers {
   font-size: 14px;
   font-weight: bold;
-  fill: #E53935;
+  fill: #888;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
+
+/* ===== 虹色パレット（書き順ごとにストロークと数字を同色にペア表示） ===== */
+.square.model.has-svg .strokes path:nth-of-type(1) { stroke: #E53935; } /* 赤 */
+.square.model.has-svg .numbers text:nth-of-type(1) { fill: #E53935; }
+
+.square.model.has-svg .strokes path:nth-of-type(2) { stroke: #FB8C00; } /* 橙 */
+.square.model.has-svg .numbers text:nth-of-type(2) { fill: #FB8C00; }
+
+.square.model.has-svg .strokes path:nth-of-type(3) { stroke: #FBC02D; } /* 黄 */
+.square.model.has-svg .numbers text:nth-of-type(3) { fill: #FBC02D; }
+
+.square.model.has-svg .strokes path:nth-of-type(4) { stroke: #43A047; } /* 緑 */
+.square.model.has-svg .numbers text:nth-of-type(4) { fill: #43A047; }
+
+.square.model.has-svg .strokes path:nth-of-type(5) { stroke: #1E88E5; } /* 青 */
+.square.model.has-svg .numbers text:nth-of-type(5) { fill: #1E88E5; }
+
+.square.model.has-svg .strokes path:nth-of-type(6) { stroke: #3949AB; } /* 藍 */
+.square.model.has-svg .numbers text:nth-of-type(6) { fill: #3949AB; }
+
+.square.model.has-svg .strokes path:nth-of-type(7) { stroke: #8E24AA; } /* 紫 */
+.square.model.has-svg .numbers text:nth-of-type(7) { fill: #8E24AA; }
 
 /* なぞり書き（薄灰） */
 .square.tracing {
